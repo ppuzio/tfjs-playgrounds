@@ -2,7 +2,7 @@ import { createCanvas } from "canvas";
 import fs from "fs";
 import { figureModelSize } from "./utils.js";
 
-const generateSquareImage = (size, color, filename) => {
+const generateSquareImage = (size: number, color: string, filename: string) => {
   const canvas = createCanvas(64, 64);
   const ctx = canvas.getContext("2d");
 

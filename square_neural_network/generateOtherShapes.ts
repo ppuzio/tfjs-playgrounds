@@ -2,7 +2,7 @@ import { createCanvas } from "canvas";
 import fs from "fs";
 import { figureModelSize } from "./utils.js";
 
-const generateRandomShapeImage = (filename) => {
+const generateRandomShapeImage = (filename: string) => {
   const canvas = createCanvas(64, 64);
   const ctx = canvas.getContext("2d");
 
@@ -12,7 +12,7 @@ const generateRandomShapeImage = (filename) => {
 
   // Random dark color
   const color = `rgb(${Math.floor(Math.random() * 128)}, ${Math.floor(
-    Math.random() * 128
+    Math.random() * 128,
   )}, ${Math.floor(Math.random() * 128)})`;
   ctx.fillStyle = color;
 
@@ -29,7 +29,7 @@ const generateRandomShapeImage = (filename) => {
         Math.floor(Math.random() * (64 - width)),
         Math.floor(Math.random() * (64 - height)),
         width,
-        height
+        height,
       );
       break;
     case 1: // Circle
@@ -40,7 +40,7 @@ const generateRandomShapeImage = (filename) => {
         Math.floor(Math.random() * (64 - 2 * radius)) + radius,
         radius,
         0,
-        2 * Math.PI
+        2 * Math.PI,
       );
       ctx.fill();
       break;
@@ -48,15 +48,15 @@ const generateRandomShapeImage = (filename) => {
       ctx.beginPath();
       ctx.moveTo(
         Math.floor(Math.random() * 64),
-        Math.floor(Math.random() * 64)
+        Math.floor(Math.random() * 64),
       );
       ctx.lineTo(
         Math.floor(Math.random() * 64),
-        Math.floor(Math.random() * 64)
+        Math.floor(Math.random() * 64),
       );
       ctx.lineTo(
         Math.floor(Math.random() * 64),
-        Math.floor(Math.random() * 64)
+        Math.floor(Math.random() * 64),
       );
       ctx.closePath();
       ctx.fill();

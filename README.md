@@ -10,5 +10,7 @@ Generates x squares and other shapes (circles, rectangles, triangles) which are 
 
 To launch:
 
-1. Install dependencies using `yarn`
-2. Launch `yarn everything` or go through each step
+1. Go to a folder that interests you (e.g. `cd square_neural_network`)
+2. Install dependencies using `yarn`
+3. Launch `yarn everything` or go through each step
+4. If you see an error saying `Error: The Node.js native addon module (tfjs_binding.node) can not be found at path:`, just run `yarn rebuildTensorFlow`

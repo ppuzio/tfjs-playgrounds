@@ -1,7 +1,7 @@
 import * as tf from "@tensorflow/tfjs-node";
 
 import {
-  figureModelSize,
+  getRandomizedData,
   imgHeight,
   imgWidth,
   loadImageTensors,
@@ -16,7 +16,7 @@ model.add(
     filters: 32,
     kernelSize: 3,
     activation: "relu",
-  })
+  }),
 ); // convolutional layer
 model.add(tf.layers.maxPooling2d({ poolSize: [2, 2] })); // pooling layer
 model.add(tf.layers.conv2d({ filters: 64, kernelSize: 3, activation: "relu" })); // convolutional layer
@@ -33,53 +33,26 @@ model.compile({
 });
 
 // training data
-
-const squareTrainingData = new Array((figureModelSize * 3) / 4)
-  .fill(0)
-  .map((_, i) => ({ label: 1, path: `squares/square_${i}.png` }));
-const otherTrainingData = new Array((figureModelSize * 3) / 4)
-  .fill(0)
-  .map((_, i) => ({ label: 0, path: `otherShapes/shape_${i}.png` }));
-
-const randomizedTrainingData = squareTrainingData
-  .concat(otherTrainingData)
-  .sort(() => Math.random() - 0.5);
+const randomizedTrainingData = getRandomizedData(false);
 
 // validation data
-
-const squareValidationData = new Array((figureModelSize * 1) / 4)
-  .fill(0)
-  .map((_, i) => ({
-    label: 1,
-    path: `squares/square_${i + (figureModelSize * 3) / 4}.png`,
-  }));
-
-const otherValidationData = new Array((figureModelSize * 1) / 4)
-  .fill(0)
-  .map((_, i) => ({
-    label: 0,
-    path: `squares/square_${i + (figureModelSize * 3) / 4}.png`,
-  }));
-
-const randomizedValidationData = squareValidationData
-  .concat(otherValidationData)
-  .sort(() => Math.random() - 0.5);
+const randomizedValidationData = getRandomizedData(true);
 
 // Load and preprocess training and validation images
 const loadTrainingData = async () => {
   const trainImageTensors = await loadImageTensors(randomizedTrainingData);
   const trainData = tf.stack(trainImageTensors);
   const labelTensors = randomizedTrainingData.map(({ label }) =>
-    tf.oneHot(label, 2)
+    tf.oneHot(label, 2),
   ); // One-hot encoding for two classes
   const trainLabels = tf.stack(labelTensors);
 
   const validationImageTensors = await loadImageTensors(
-    randomizedValidationData
+    randomizedValidationData,
   );
 
   const validationLabelTensors = randomizedValidationData.map(({ label }) =>
-    tf.oneHot(label, 2)
+    tf.oneHot(label, 2),
   ); // One-hot encoding for two classes
   const validationData = tf.stack(validationImageTensors);
   const validationLabels = tf.stack(validationLabelTensors);
@@ -96,7 +69,7 @@ loadTrainingData().then(
         callbacks: {
           onEpochEnd: (epoch, log) => {
             console.log(
-              `Epoch ${epoch + 1}: loss = ${log?.loss}, accuracy = ${log?.acc}`
+              `Epoch ${epoch + 1}: loss = ${log?.loss}, accuracy = ${log?.acc}`,
             );
           },
         },
@@ -108,5 +81,5 @@ loadTrainingData().then(
 
         model.save(savePath);
       });
-  }
+  },
 );

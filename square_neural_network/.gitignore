@@ -1,0 +1,4 @@
+node_modules
+*/**/*.png
+*/**/model.json
+*/**/weights.bin

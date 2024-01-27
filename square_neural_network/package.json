@@ -1,0 +1,28 @@
+{
+  "name": "square_neural_network",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "My first neural network since the uni times",
+  "main": "index.ts",
+  "devDependencies": {},
+  "scripts": {
+    "train": "tsx index.ts",
+    "getTestData": "tsx generateOtherShapes.ts && tsx generateSquares.ts",
+    "createFolders": "mkdir -p squares otherShapes model",
+    "evaluateModel": "tsx useModel.ts",
+    "doEverything": "yarn createFolders && yarn getTestData && yarn train && yarn evaluateModel"
+  },
+  "keywords": [
+    "ml"
+  ],
+  "author": "Paweł Puzio",
+  "license": "ISC",
+  "dependencies": {
+    "@tensorflow/tfjs": "^4.16.0",
+    "@tensorflow/tfjs-node": "^4.16.0",
+    "@types/node": "^20.11.7",
+    "canvas": "2.11.2",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3"
+  }
+}
